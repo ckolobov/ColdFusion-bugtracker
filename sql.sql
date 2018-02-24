@@ -1,0 +1,24 @@
+CREATE TABLE Users (
+id VARCHAR(36) PRIMARY KEY,
+loginname VARCHAR(30) NOT NULL,
+firstname VARCHAR(30) NOT NULL,
+lastname VARCHAR(30) NOT NULL,
+password CHAR(128) NOT NULL
+);
+CREATE TABLE Bugs (
+id VARCHAR(36) PRIMARY KEY,
+date DATETIME NOT NULL,
+description_brief VARCHAR(120) NOT NULL,
+description_full VARCHAR(5000),
+user VARCHAR(36) NOT NULL,
+status INT(1) NOT NULL,
+priority INT(1) NOT NULL,
+severity INT(1) NOT NULL
+);
+CREATE TABLE BugsHistory (
+id VARCHAR(36) PRIMARY KEY,
+date DATETIME NOT NULL,
+action INT(1) NOT NULL,
+comment VARCHAR(1000),
+user VARCHAR(36) NOT NULL
+);
