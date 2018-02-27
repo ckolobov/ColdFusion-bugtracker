@@ -1,4 +1,3 @@
-<cf_HeaderFooter title="Новый пользователь">
 <cfif structKeyExists(form, 'newUserSubmit')>
 	<cfset errorMessages = ArrayNew(1) />
 	<!---Validate brief description--->
@@ -59,4 +58,3 @@
 	<label>Подтвердите пароль:</label> <cfinput type="password" name="userPasswordConfirm" id="userPasswordConfirm" required="true" message="Пожалуйста, повторите пароль" validateAt="onSubmit" /><br>
 	<input type="submit" name="newUserSubmit" id="newUserSubmit" value="Сохранить" />
 </cfform>
-</cf_HeaderFooter>
