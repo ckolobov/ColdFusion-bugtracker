@@ -7,14 +7,18 @@
     <title><cfoutput>#attributes.title# - Bugtracker prototype</cfoutput></title>
 </head>
 <body>
-	<header>
-		<!---Display a welcome message--->
-    	<p><cfoutput>Welcome #session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#!</cfoutput></p>
-    	<p><!---<a href="/FirstProject/profile.cfm">My Profile</a>---><a href="?logout">Logout</a></p>
+	<header class="header">
+		<cfif structKeyExists(session,'stLoggedInUser')>
+		<!---Display a welcome message and navigation--->
+    	<p><cfoutput>Добро пожаловать #session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#!</cfoutput></p>
+    	<p><a href="/FirstProject/Profile.cfm">My Profile</a> <a href="?logout">Logout</a></p>
+    	<nav><a href="Bugs.cfm">Все ошибки</a> <a href="newBug.cfm">Добавить ошибку</a> <a href="Users.cfm">Все пользователи</a> <a href="newUser.cfm">Добавить пользователя</a></nav>
+    	</cfif>
 	</header>
-	<nav><a href="Bugs.cfm">Все ошибки</a><a href="newBug.cfm">Добавить ошибку</a></nav>
+	<main class="main">
 <cfelse>
-	<footer>
+	</main>
+	<footer class="footer">
 		<p class="copyright">&copy; Copyright 2018</p>
 	</footer>
 </body>

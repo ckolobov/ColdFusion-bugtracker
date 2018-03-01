@@ -1,13 +1,9 @@
+<cfset users = application.userService.getAllUsers() />
 <cf_HeaderFooter title="All users">
-<cfquery name="getAllUsers">
-	SELECT firstname, lastname
-	FROM Users
-	ORDER BY lastname
-</cfquery>
-<cfif getAllUsers.recordCount EQ 0>
+<cfif users.recordCount EQ 0>
 	<p>There are no users at this time</p>
 <cfelse>
-	<cfoutput query="getAllUsers">
+	<cfoutput query="users">
 		#lastname# #firstname#<br>
 	</cfoutput>
 </cfif>

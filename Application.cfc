@@ -6,12 +6,20 @@
 	<cfset this.sessionManagement = true />
 	<cfset this.sessionTimeout = createTimespan(0,0,30,0) />
 	
+	
+	<!---OnApplicationStart() method--->
+	<cffunction name="onApplicationStart" returntype="boolean" >
+		<cfset application.userService = createObject("component",'components.userService') />
+		<cfset application.bugService = createObject("component",'components.bugService') />
+		<cfset application.bugHistoryService = createObject("component",'components.bugHistoryService') />
+		<cfreturn true />
+	</cffunction>
 	<!---onRequestStart() method--->
 	<cffunction name="onRequestStart" returntype="boolean" >
 		<cfargument name="targetPage" type="string" required="true" />
 		<!---Handle the logout--->
 		<cfif structKeyExists(URL,'logout')>
-			<cfset createObject("component",'final.components.authenticationService').doLogout() />
+			<cfset createObject("component",'components.authenticationService').doLogout() />
 		</cfif>
 		<!---Add a login form for unauthorised user--->
 		<cfif NOT listFind(arguments.targetPage,'newUser.cfm', '/')>
@@ -24,6 +32,10 @@
 					roles = "user"/> 
 				</cfif> 
 			</cflogin>
+		</cfif>
+		<!---handle restart app parameter--->
+		<cfif isDefined('url.restartApp')>
+			<cfset this.onApplicationStart() />
 		</cfif>
 		<cfreturn true>
 	</cffunction>

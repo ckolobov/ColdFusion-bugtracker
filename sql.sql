@@ -19,6 +19,7 @@ deleted BOOLEAN DEFAULT false
 );
 CREATE TABLE BugsHistory (
 id VARCHAR(36) PRIMARY KEY,
+bug_id INT,
 date DATETIME NOT NULL,
 action INT(1) NOT NULL,
 comment VARCHAR(1000) CHARACTER SET utf8,
