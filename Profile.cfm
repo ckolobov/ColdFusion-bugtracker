@@ -13,8 +13,8 @@
 <!---Get user to update--->
 <cfset userToUpdate = application.userService.getUserByID(session.stLoggedInUser.userID) />
 <cf_HeaderFooter title="Профиль">
-		<h1>Ваш профиль</h1>
-		<cfform>
+		<h1 class="page-heading">Ваш профиль</h1>
+		<cfform class="form">
 			<!---Output error messages if any--->
 			<cfif structKeyExists(variables,'errorMessages') AND NOT arrayIsEmpty(errorMessages)>
 				<cfoutput>
@@ -28,21 +28,33 @@
 				<p class="feedback">Ваш профиль обновлен!</p>
 			</cfif>
 				<!---First name text field--->
-				<label for="userFirstName">Имя:</label>
-				<cfinput name="userFirstName" id="userFirstName" value="#userToUpdate.firstname#" required="true" message="Пожалуйста, введите имя" validateAt="onSubmit" />
+				<div class="form__group">
+					<label class="label form__label" for="userFirstName">Имя:</label>
+					<cfinput class="input form__input" name="userFirstName" id="userFirstName" value="#userToUpdate.firstname#" required="true" message="Пожалуйста, введите имя" validateAt="onSubmit" />
+				</div>
 				<!---Last name text field--->
-				<label for="userLastName">Фамилия:</label>
-				<cfinput name="userLastName" id="userLastName" value="#userToUpdate.lastname#" required="true" message="Пожалуйста, введите фамилию" validateAt="onSubmit" />
-				<!---E-Mail Address text field--->
-				<label for="userEmail">Логин:</label>
-				<cfinput name="userLogin" id="userEmail" value="#userToUpdate.loginname#" required="true" message="Пожалуйста, введите логин" validateAt="onSubmit" />
+				<div class="form__group">
+					<label class="label form__label" for="userLastName">Фамилия:</label>
+					<cfinput class="input form__input" name="userLastName" id="userLastName" value="#userToUpdate.lastname#" required="true" message="Пожалуйста, введите фамилию" validateAt="onSubmit" />
+				</div>
+				<!---Login text field--->
+				<div class="form__group">
+					<label class="label form__label" for="userEmail">Логин:</label>
+					<cfinput class="input form__input" name="userLogin" id="userEmail" value="#userToUpdate.loginname#" required="true" message="Пожалуйста, введите логин" validateAt="onSubmit" />
+				</div>
 				<!---Password text field--->
-				<label for="userPassword">Пароль:</label>
-				<cfinput type="password" name="userPassword" value="#userToUpdate.password#" id="userPassword" required="true" message="Пожалуйста, введите пароль" validateAt="onSubmit" />
-				<label for="userPasswordConfirm">Повторите пароль:</label>
-				<cfinput type="password" name="userPasswordConfirm" value="#userToUpdate.password#" id="userPasswordConfirm" required="true" message="Пожалуйста, повторите пароль" validateAt="onSubmit" />
-			<cfinput name="userID" value="#userToUpdate.id#" type="hidden" />
-			<!---Submit button--->
-			<input type="submit" name="editUserSubmit" id="editUserSubmit" value="Обновить" />
+				<div class="form__group">
+					<label class="label form__label" for="userPassword">Пароль:</label>
+					<cfinput class="input form__input" type="password" name="userPassword" value="#userToUpdate.password#" id="userPassword" required="true" message="Пожалуйста, введите пароль" validateAt="onSubmit" />
+				</div>
+				<!---Confirm password text field--->
+				<div class="form__group">
+					<label class="label form__label" for="userPasswordConfirm">Повторите пароль:</label>
+					<cfinput class="input form__input" type="password" name="userPasswordConfirm" value="#userToUpdate.password#" id="userPasswordConfirm" required="true" message="Пожалуйста, повторите пароль" validateAt="onSubmit" />
+				</div>
+				<!---User id hidden field--->
+				<cfinput name="userID" value="#userToUpdate.id#" type="hidden" />
+				<!---Submit button--->
+				<input class="btn-submit form__btn-submit" type="submit" name="editUserSubmit" id="editUserSubmit" value="Обновить" />
 		</cfform>
 </cf_HeaderFooter>

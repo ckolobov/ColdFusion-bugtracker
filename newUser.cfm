@@ -1,4 +1,4 @@
-<cf_HeaderFooter>
+<cf_HeaderFooter title="Новый пользователь">
 <!---Validate user--->
 <cfif structKeyExists(form, 'newUserSubmit')>
 	<cfset errorMessages = application.userService.validateUser(form.userFirstName,form.userLastName,form.userLogin,form.userPassword,form.userPasswordConfirm) />
@@ -11,20 +11,36 @@
 <cfif isDefined('userIsInserted')>
 	<p>Новый пользователь зарегистрирован!</p>
 <cfelse>
-	<cfif isDefined('errorMessages') AND NOT ArrayIsEmpty(errorMessages)>
-		<cfoutput >
-			<cfloop array="#errorMessages#" index="message">
-				<p class="errorMessage">#message#</p>
-			</cfloop>
-		</cfoutput>
-	</cfif>
-	<cfform>
-		<label>Имя:</label> <cfinput type="text" name="userFirstName" id="userFirstName" required="true" message="Пожалуйста, введите ваше имя" /><br>
-		<label>Фамилия:</label> <cfinput type="text" name="userLastName" id="userLastName" required="true" message="Пожалуйста, введите вашу фамилию" /><br>
-		<label>Логин:</label> <cfinput type="text" name="userLogin" id="userLogin" required="true" message="Пожалуйста, введите логин" /><br>
-		<label>Пароль:</label> <cfinput type="password" name="userPassword" id="userPassword" required="true" message="Пожалуйста, введите желаемый пароль" validateAt="onSubmit" /><br>
-		<label>Подтвердите пароль:</label> <cfinput type="password" name="userPasswordConfirm" id="userPasswordConfirm" required="true" message="Пожалуйста, повторите пароль" validateAt="onSubmit" /><br>
-		<input type="submit" name="newUserSubmit" id="newUserSubmit" value="Сохранить" />
+	<h1 class="page-heading">Регистрация нового пользователя</h1>
+	<cfform class="form form-new-user">
+		<cfif isDefined('errorMessages') AND NOT ArrayIsEmpty(errorMessages)>
+			<cfoutput >
+				<cfloop array="#errorMessages#" index="message">
+					<p class="errorMessage">#message#</p>
+				</cfloop>
+			</cfoutput>
+		</cfif>
+		<div class="form__group">
+			<label class="label form__label">Имя:</label>
+			<cfinput class="input form__input" type="text" name="userFirstName" id="userFirstName" required="true" message="Пожалуйста, введите ваше имя" />
+		</div>
+		<div class="form__group">
+			<label class="label form__label">Фамилия:</label>
+			<cfinput class="input form__input" type="text" name="userLastName" id="userLastName" required="true" message="Пожалуйста, введите вашу фамилию" />
+		</div>
+		<div class="form__group">
+			<label class="label form__label">Логин:</label>
+			<cfinput class="input form__input" type="text" name="userLogin" id="userLogin" required="true" message="Пожалуйста, введите логин" />
+			</div>
+		<div class="form__group">
+			<label class="label form__label">Пароль:</label>
+			<cfinput class="input form__input" type="password" name="userPassword" id="userPassword" required="true" message="Пожалуйста, введите желаемый пароль" validateAt="onSubmit" />
+		</div>
+		<div class="form__group">
+			<label class="label form__label">Подтвердите пароль:</label>
+			<cfinput class="input form__input" type="password" name="userPasswordConfirm" id="userPasswordConfirm" required="true" message="Пожалуйста, повторите пароль" validateAt="onSubmit" />
+		</div>
+		<input class="form__btn-submit btn-submit" type="submit" name="newUserSubmit" id="newUserSubmit" value="Сохранить" />
 	</cfform>
 </cfif>
 </cf_HeaderFooter>

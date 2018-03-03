@@ -9,6 +9,7 @@
 		<cfset isUserLoggedIn = authenticationService.doLogin(form.userLogin,form.userPassword) />
 	</cfif>
 </cfif>
+<cf_HeaderFooter title="Авторизация">
 <!---Form processing end here--->
 <cfform id="frmConnexion" preservedata="true">
     <cfif structKeyExists(variables,'errorMessages') AND NOT ArrayIsEmpty(errorMessages)>
@@ -19,7 +20,7 @@
     	</cfoutput>
     </cfif>
     <cfif structKeyExists(variables,'isUserLoggedIn') AND isUserLoggedIn EQ false>
-    	<p class="errorMessage">Пользователь не найдет, попробуйте ещё раз!</p>
+    	<p class="error-message">Пользователь не найдет, попробуйте ещё раз!</p>
     </cfif>
     <cfif structKeyExists(session,'stLoggedInUser')>
     	<!---Refresh page--->
@@ -27,10 +28,14 @@
 	        window.location.reload(true);
 	    </script>
     <cfelse>
-	    	<label for="fld_userEmail">E-mail address</label>
-	        <cfinput type="text" name="userLogin" id="userLogin" required="true" validateAt="onSubmit" message="Пожалуйста, введите логин" />
-			<label for="fld_userPassword">Password</label>
-	        <cfinput type="password" name="userPassword" id="userPassword" required="true" validateAt="onSubmit" message="Пожалуйста, введите пароль" />
-	    <cfinput type="submit" name="submitLogin" id="submitLogin" value="Login" /><a href="/FirstProject/newUser.cfm">Зарегистрироваться</a>
+    	<div class="form form-login">
+	    	<label class="label form-login__label" for="userLogin">Логин</label>
+	        <cfinput class="input form-login__input" type="text" name="userLogin" id="userLogin" required="true" validateAt="onSubmit" message="Пожалуйста, введите логин" />
+			<label class="label form-login__label" for="userPassword">Пароль</label>
+	        <cfinput class="input form-login__input" type="password" name="userPassword" id="userPassword" required="true" validateAt="onSubmit" message="Пожалуйста, введите пароль" />
+	    	<cfinput class="btn-submit form-login__btn-submit" type="submit" name="submitLogin" id="submitLogin" value="Войти" />
+	    	<a class="btn form-login__btn" href="/FirstProject/newUser.cfm">Зарегистрироваться</a>
+	    </div>
     </cfif>
 </cfform>
+</cf_HeaderFooter>

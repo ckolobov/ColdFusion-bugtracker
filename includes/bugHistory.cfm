@@ -1,5 +1,5 @@
 <!---Form processing script starts here--->
-<cfif structKeyExists(form, 'editBugSubmit') AND isDefined('url.edit') AND url.edit EQ true>
+<cfif structKeyExists(form, 'editBugSubmit')>
 	<cfset errorMessages = application.bugService.validateBugEdit(form.bugEditStatus, form.bugEditPriority, form.bugEditSeverity, form.bugEditComment) />
 	<cfif ArrayIsEmpty(errorMessages)>
 		<cfset application.bugService.updateBug(form.bugEditStatus, form.bugEditPriority, form.bugEditSeverity, #url.BugID#) />
@@ -8,57 +8,53 @@
 	</cfif>
 </cfif>
 <cfif isDefined('bugIsEdited')>
-	<p>Изменения внесены!</p>
-	<cfoutput >
-		<p><a href="?bugID=#url.BugID#">Обновить историю</a></p>
-	</cfoutput>
+	<cflocation url="?BugID=#url.BugID#" >
 <cfelse>
 	<cfset editStatus = application.bugHistoryService.getEditStatus(#singleBug.bugStatus#, status) />
-	<cfform action="?bugID=#url.BugID#&edit=true">
-		<label for="bugEditStatus">Статус:</label>
-		<cfselect name="bugEditStatus" id="bugEditStatus">
-			<cfoutput>
-				<option value="#singleBug.bugStatus#">#status[singleBug.bugStatus]#</option>
-				<cfloop collection="#editStatus#" item="key">
-					<option value="#key#">#editStatus[key]#</option>
+	<h2 class="page-sub-heading">Редактировать</h2>
+	<cfform class="form form_wide" action="?bugID=#url.BugID#&edit=true">
+		<cfif isDefined('errorMessages') AND NOT ArrayIsEmpty(errorMessages)>
+			<cfoutput >
+				<cfloop array="#errorMessages#" index="message">
+					<p class="errorMessage">#message#</p>
 				</cfloop>
 			</cfoutput>
-		</cfselect>
-		<br>
-		<label for="bugEditPriority">Приоритет:</label>
-		<cfselect name="bugEditPriority" id="bugEditPriority">
-			<option value="0">Не выбран</option>
-			<cfoutput>
-				<cfloop from="1" to="#arrayLen(priority)#" index="i">
-					<option value="#i#">#priority[i]#</option>
-				</cfloop>
-			</cfoutput>
-		</cfselect>
-		<br>
-		<label for="bugEditSeverity">Критичность:</label>
-		<cfselect name="bugEditSeverity" id="bugEditSeverity">
-			<option value="0">Не выбрана</option>
-			<cfoutput>
-				<cfloop from="1" to="#arrayLen(severity)#" index="i">
-					<option value="#i#">#severity[i]#</option>
-				</cfloop>
-			</cfoutput>
-		</cfselect>
-		<br>
-		<label for="bugEditComment">Комментарий: </label>
-		<textarea name="bugEditComment" id="bugEditComment"></textarea>
-		<br>
-		<input type="submit" name="editBugSubmit" id="editBugSubmit" value="Сохранить" />
+		</cfif>
+		<div class="form__group">
+			<label class="label label_short label_taline_right" for="bugEditStatus">Статус:</label>
+			<cfselect class="select form__select select_short" name="bugEditStatus" id="bugEditStatus">
+				<cfoutput>
+					<option value="#singleBug.bugStatus#">#status[singleBug.bugStatus]#</option>
+					<cfloop collection="#editStatus#" item="key">
+						<option value="#key#">#editStatus[key]#</option>
+					</cfloop>
+				</cfoutput>
+			</cfselect>
+			<br class="large-screen-hidden-text small-screen-hidden-text">
+			<label class="label label_short label_taline_right" for="bugEditPriority">Приоритет:</label>
+			<cfselect class="select form__select select_short" name="bugEditPriority" id="bugEditPriority">
+				<option value="0">Не выбран</option>
+				<cfoutput>
+					<cfloop from="1" to="#arrayLen(priority)#" index="i">
+						<option value="#i#">#priority[i]#</option>
+					</cfloop>
+				</cfoutput>
+			</cfselect>
+			<br class="large-screen-hidden-text small-screen-hidden-text">
+			<label class="label label_short label_taline_right" for="bugEditSeverity">Критичность:</label>
+			<cfselect class="select form__select select_short" name="bugEditSeverity" id="bugEditSeverity">
+				<option value="0">Не выбрана</option>
+				<cfoutput>
+					<cfloop from="1" to="#arrayLen(severity)#" index="i">
+						<option value="#i#">#severity[i]#</option>
+					</cfloop>
+				</cfoutput>
+			</cfselect>
+		</div>
+		<div class="form__group">
+			<label class="label" for="bugEditComment">Комментарий: </label>
+			<cftextarea class="textarea" name="bugEditComment" id="bugEditComment" required="true" message="Пожалуйста, напишите комментарий!" />
+		</div>
+		<input class="btn-submit" type="submit" name="editBugSubmit" id="editBugSubmit" value="Сохранить" />
 	</cfform>
 </cfif>
-<cfset bugHistory = application.bugHistoryService.getHistoryByBugID(#url.BugID#) />
-<table border="1">
-	<cfoutput query="bugHistory">
-	<tr>
-		<td>#date#</td>
-		<td>#firstname# #lastname#</td>
-		<td>#action[bugAction]#</td>
-		<td>#comment#</td>
-	</tr>
-	</cfoutput>
-</table>
