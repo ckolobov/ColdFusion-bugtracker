@@ -11,7 +11,9 @@
 <cfif isDefined('userIsInserted')>
 	<div class="success-message">
 		<p>Новый пользователь зарегистрирован!</p>
-		<p><a class="btn success-message__btn" href="Bugs.cfm">Войти</a></p>
+		<cfif NOT structKeyExists(session,'stLoggedInUser')>
+			<p><a class="btn success-message__btn" href="Bugs.cfm">Войти</a></p>
+		</cfif>
 	</div>
 <cfelse>
 	<h1 class="page-heading">Регистрация нового пользователя</h1>
@@ -19,7 +21,7 @@
 		<cfif isDefined('errorMessages') AND NOT ArrayIsEmpty(errorMessages)>
 			<cfoutput >
 				<cfloop array="#errorMessages#" index="message">
-					<p class="errorMessage">#message#</p>
+					<p class="error-message">#message#</p>
 				</cfloop>
 			</cfoutput>
 		</cfif>
@@ -43,7 +45,7 @@
 			<label class="label form__label">Подтвердите пароль:</label>
 			<cfinput class="input form__input" type="password" name="userPasswordConfirm" id="userPasswordConfirm" required="true" message="Пожалуйста, повторите пароль" validateAt="onSubmit" />
 		</div>
-		<input class="form__btn-submit btn-submit" type="submit" name="newUserSubmit" id="newUserSubmit" value="Зарегистрироваться" />
+		<input class="form__btn-submit btn-submit" type="submit" name="newUserSubmit" id="newUserSubmit" value="Зарегистрировать" />
 	</cfform>
 </cfif>
 </cf_HeaderFooter>

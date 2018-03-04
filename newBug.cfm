@@ -26,7 +26,7 @@
 		</div>
 		<div class="form__group">
 			<label class="label form__label" for="bugPriority">Приоритет:</label>
-			<cfselect class="select form__select" name="bugPriority" id="bugPriority">
+			<cfselect class="select form__select" name="bugPriority" id="bugPriority" >
 				<option value="0">Не выбран</option>
 				<cfoutput>
 					<cfloop from="1" to="#arrayLen(priority)#" index="i">

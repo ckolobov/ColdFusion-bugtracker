@@ -15,7 +15,7 @@
     <cfif structKeyExists(variables,'errorMessages') AND NOT ArrayIsEmpty(errorMessages)>
     	<cfoutput>
     		<cfloop array="#errorMessages#" item="message">
-    			<p class="errorMessage">#message#</p>
+    			<p class="error-message">#message#</p>
     		</cfloop>
     	</cfoutput>
     </cfif>
@@ -32,7 +32,7 @@
 			<label class="label form-login__label" for="userPassword">Пароль</label>
 	        <cfinput class="input form-login__input" type="password" name="userPassword" id="userPassword" required="true" validateAt="onSubmit" message="Пожалуйста, введите пароль" />
 	    	<cfinput class="btn-submit form-login__btn-submit" type="submit" name="submitLogin" id="submitLogin" value="Войти" />
-	    	<a class="btn form-login__btn" href="/FirstProject/newUser.cfm">Зарегистрироваться</a>
+	    	<a class="btn form-login__btn" href="newUser.cfm">Зарегистрироваться</a>
 	    </div>
     </cfif>
 </cfform>

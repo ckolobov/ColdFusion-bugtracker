@@ -1,10 +1,10 @@
 <!---Form processing begins here--->
 <cfif structKeyExists(form,'editUserSubmit')>
 	<!---Server side form validation--->
-	<cfset errorMessages = application.userService.validateUser(form.userFirstName,form.userLastName,form.userLogin,form.userPassword,form.userPasswordConfirm) />
-	<!---Continue form processing if the aErrorMessages array is empty--->
+	<cfset errorMessages = application.userService.validateUserUpdate(form.userFirstName,form.userLastName) />
+	<!---Continue form processing if the errorMessages array is empty--->
 	<cfif arrayIsEmpty(errorMessages)>
-		<cfset application.userService.updateUser(form.userFirstName,form.userLastName,form.userLogin,form.userPassword,form.userID) />
+		<cfset application.userService.updateUser(form.userFirstName,form.userLastName,form.userID) />
 		<cfset variables.formSubmitComplete = true />
 	</cfif>
 </cfif>
@@ -19,7 +19,7 @@
 			<cfif structKeyExists(variables,'errorMessages') AND NOT arrayIsEmpty(errorMessages)>
 				<cfoutput>
 					<cfloop array="#errorMessages#" index="message">
-						<p class="errorMessage">#message#</p>
+						<p class="error-message">#message#</p>
 					</cfloop>
 				</cfoutput>
 			</cfif>
@@ -40,17 +40,7 @@
 				<!---Login text field--->
 				<div class="form__group">
 					<label class="label form__label" for="userEmail">Логин:</label>
-					<cfinput class="input form__input" name="userLogin" id="userEmail" value="#userToUpdate.loginname#" required="true" message="Пожалуйста, введите логин" validateAt="onSubmit" />
-				</div>
-				<!---Password text field--->
-				<div class="form__group">
-					<label class="label form__label" for="userPassword">Пароль:</label>
-					<cfinput class="input form__input" type="password" name="userPassword" value="#userToUpdate.password#" id="userPassword" required="true" message="Пожалуйста, введите пароль" validateAt="onSubmit" />
-				</div>
-				<!---Confirm password text field--->
-				<div class="form__group">
-					<label class="label form__label" for="userPasswordConfirm">Повторите пароль:</label>
-					<cfinput class="input form__input" type="password" name="userPasswordConfirm" value="#userToUpdate.password#" id="userPasswordConfirm" required="true" message="Пожалуйста, повторите пароль" validateAt="onSubmit" />
+					<cfinput class="input form__input" name="userLogin" id="userEmail" value="#userToUpdate.loginname#" required="true" message="Пожалуйста, введите логин" validateAt="onSubmit" disabled />
 				</div>
 				<!---User id hidden field--->
 				<cfinput name="userID" value="#userToUpdate.id#" type="hidden" />

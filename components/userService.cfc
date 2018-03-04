@@ -28,17 +28,26 @@
 		<cfargument name="userPassword" type="string" required="true" />
 		<cfargument name="userPasswordConfirm" type="string" required="true" />
 		<cfset var errorMessages = arrayNew(1) />
-		<!---Validate brief description--->
+		<!---Validate first name--->
 		<cfif form.userFirstName EQ ''>
 			<cfset arrayAppend(errorMessages,'Пожалуйста, введите ваше имя') />
 		</cfif>
-		<!---Validate lastName--->
+		<!---Validate last name--->
 		<cfif form.userLastName EQ ''>
 			<cfset arrayAppend(errorMessages,'Пожалуйста, введите вашу фамилию') />
 		</cfif>
 		<!---Validate login--->
 		<cfif form.userLogin EQ ''>
 			<cfset arrayAppend(errorMessages,'Пожалуйста, введите ваш логин для входа в систему') />
+		</cfif>
+		<!---Prevent login duplication--->
+		<cfquery name="loginDuplication">
+			SELECT *
+			FROM Users
+			WHERE loginname = <cfqueryparam value="#arguments.userLogin#" cfsqltype="cf_sql_varchar" />
+		</cfquery>
+		<cfif loginDuplication.recordCount NEQ 0>
+			<cfset arrayAppend(errorMessages,'Такой логин уже существует! Пожалуйста выберите другой')/>
 		</cfif>
 		<!---Validate Password--->
 		<cfif form.userPassword EQ '' >
@@ -68,18 +77,31 @@
 	<cffunction name="updateUser" access="public" output="false" returntype="void">
 		<cfargument name="userFirstName" type="string" required="true" />
 		<cfargument name="userLastName" type="string" required="true" />
-		<cfargument name="userLogin" type="string" required="true" />
-		<cfargument name="userPassword" type="string" required="true" />
 		<cfargument name="userID" type="string" required="true" />
 		<cfquery>
 			UPDATE Users
 			SET
 			firstname = <cfqueryparam value="#arguments.userFirstName#" cfsqltype="cf_sql_varchar" />,
-			lastname = <cfqueryparam value="#arguments.userLastName#" cfsqltype="cf_sql_varchar" />,
-			loginname = <cfqueryparam value="#arguments.userLogin#" cfsqltype="cf_sql_varchar" />,
-			password = <cfqueryparam value="#arguments.userPassword#" cfsqltype="cf_sql_varchar" />
+			lastname = <cfqueryparam value="#arguments.userLastName#" cfsqltype="cf_sql_varchar" />
 			WHERE id = <cfqueryparam value="#arguments.userID#" cfsqltype="cf_sql_varchar" />
 		</cfquery>
+		<cfset session.stLoggedInUser.userFirstName = arguments.userFirstName />
+		<cfset session.stLoggedInUser.userLastName = arguments.userLastName />
+	</cffunction>
+	<!---validateUserUpdate() method--->
+	<cffunction name="validateUserUpdate" access="public" output="false" returntype="array">
+		<cfargument name="userFirstName" type="string" required="true" />
+		<cfargument name="userLastName" type="string" required="true" />
+		<cfset var errorMessages = arrayNew(1) />
+		<!---Validate first name--->
+		<cfif form.userFirstName EQ ''>
+			<cfset arrayAppend(errorMessages,'Пожалуйста, введите ваше имя') />
+		</cfif>
+		<!---Validate last name--->
+		<cfif form.userLastName EQ ''>
+			<cfset arrayAppend(errorMessages,'Пожалуйста, введите вашу фамилию') />
+		</cfif>
+		<cfreturn errorMessages />
 	</cffunction>
 	<!---Get All active Users Method--->
 	<cffunction name="getAllUsers" returntype="Query">

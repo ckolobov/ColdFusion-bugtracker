@@ -13,7 +13,7 @@
 			<cfif structKeyExists(session,'stLoggedInUser')>
 			<!---Display a welcome message and navigation--->
 		    	<span class="header__user-name"><cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#</cfoutput></span>
-		    	<a class="header__button" href="/FirstProject/Profile.cfm">Мой профиль</a>
+		    	<a class="header__button" href="Profile.cfm">Мой профиль</a>
 		    	<a class="header__button" href="?logout">Выйти</a>
 		    	<nav class="main-navigation header__main-navigation">
 		    		<a class="main-navigation__item" href="Bugs.cfm">Все ошибки</a>

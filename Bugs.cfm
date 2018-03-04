@@ -1,7 +1,7 @@
 <cfinclude template="includes/bugConst.cfm">
 <cfif isDefined('url.BugID')>
 	<cfset singleBug = application.bugService.getBugByID(#url.BugID#) />
-	<cf_HeaderFooter title="Bug №#url.BugID#">
+	<cf_HeaderFooter title="Ошибка №#url.BugID#">
 		<cfif singleBug.recordCount EQ 0>
 			<cfoutput >
 				<p>Нет ошибки с номером №#url.BugID#</p>
@@ -66,7 +66,7 @@
 						<tr class="table__row">
 							<td class="table__cell">
 								<strong>
-									<span class="label table__lable">Изменение №</span>
+									<span class="large-screen-hidden-text">Изменение №</span>
 									#i#
 								</strong>
 							</td>
