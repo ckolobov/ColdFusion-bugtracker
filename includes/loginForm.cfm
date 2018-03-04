@@ -24,9 +24,7 @@
     </cfif>
     <cfif structKeyExists(session,'stLoggedInUser')>
     	<!---Refresh page--->
-	    <script>        
-	        window.location.reload(true);
-	    </script>
+		<p>Вы вошли!</p>
     <cfelse>
     	<div class="form form-login">
 	    	<label class="label form-login__label" for="userLogin">Логин</label>

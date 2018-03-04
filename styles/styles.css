@@ -262,6 +262,9 @@
 	font-weight: bold;
 	color: #ff0000;
 }
+.success-message__btn {
+	display: inline-block;
+}
 .footer {
 	width: 100%;
 	max-width: 1200px;

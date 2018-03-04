@@ -9,7 +9,10 @@
 </cfif>
 
 <cfif isDefined('userIsInserted')>
-	<p>Новый пользователь зарегистрирован!</p>
+	<div class="success-message">
+		<p>Новый пользователь зарегистрирован!</p>
+		<p><a class="btn success-message__btn" href="Bugs.cfm">Войти</a></p>
+	</div>
 <cfelse>
 	<h1 class="page-heading">Регистрация нового пользователя</h1>
 	<cfform class="form form-new-user">
@@ -40,7 +43,7 @@
 			<label class="label form__label">Подтвердите пароль:</label>
 			<cfinput class="input form__input" type="password" name="userPasswordConfirm" id="userPasswordConfirm" required="true" message="Пожалуйста, повторите пароль" validateAt="onSubmit" />
 		</div>
-		<input class="form__btn-submit btn-submit" type="submit" name="newUserSubmit" id="newUserSubmit" value="Сохранить" />
+		<input class="form__btn-submit btn-submit" type="submit" name="newUserSubmit" id="newUserSubmit" value="Зарегистрироваться" />
 	</cfform>
 </cfif>
 </cf_HeaderFooter>
